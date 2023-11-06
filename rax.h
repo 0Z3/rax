@@ -189,28 +189,28 @@ typedef struct raxIterator {
 extern void *raxNotFound;
 
 /* Exported API. */
-rax *raxNew(void);
-int raxInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old);
-int raxTryInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old);
-int raxRemove(rax *rax, unsigned char *s, size_t len, void **old);
-void *raxFind(rax *rax, unsigned char *s, size_t len);
-void raxFree(rax *rax);
-void raxFreeWithCallback(rax *rax, void (*free_callback)(void*));
-void raxStart(raxIterator *it, rax *rt);
-int raxSeek(raxIterator *it, const char *op, unsigned char *ele, size_t len);
-int raxNext(raxIterator *it);
-int raxPrev(raxIterator *it);
-int raxRandomWalk(raxIterator *it, size_t steps);
-int raxCompare(raxIterator *iter, const char *op, unsigned char *key, size_t key_len);
-void raxStop(raxIterator *it);
-int raxEOF(raxIterator *it);
-void raxShow(rax *rax);
-uint64_t raxSize(rax *rax);
-unsigned long raxTouch(raxNode *n);
+rax *raxNew(void *context);
+int raxInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old, void *context);
+int raxTryInsert(rax *rax, unsigned char *s, size_t len, void *data, void **old, void *context);
+int raxRemove(rax *rax, unsigned char *s, size_t len, void **old, void *context);
+void *raxFind(rax *rax, unsigned char *s, size_t len, void *context);
+void raxFree(rax *rax, void *context);
+void raxFreeWithCallback(rax *rax, void (*free_callback)(void*, void*), void *context);
+void raxStart(raxIterator *it, rax *rt, void *context);
+int raxSeek(raxIterator *it, const char *op, unsigned char *ele, size_t len, void *context);
+int raxNext(raxIterator *it, void *context);
+int raxPrev(raxIterator *it, void *context);
+int raxRandomWalk(raxIterator *it, size_t steps, void *context);
+int raxCompare(raxIterator *iter, const char *op, unsigned char *key, size_t key_len, void *context);
+void raxStop(raxIterator *it, void *context);
+int raxEOF(raxIterator *it, void *context);
+void raxShow(rax *rax, void *context);
+uint64_t raxSize(rax *rax, void *context);
+unsigned long raxTouch(raxNode *n, void *context);
 void raxSetDebugMsg(int onoff);
 
 /* Internal API. May be used by the node callback in order to access rax nodes
  * in a low level way, so this function is exported as well. */
-void raxSetData(raxNode *n, void *data);
+void raxSetData(raxNode *n, void *data, void *context);
 
 #endif

@@ -37,7 +37,8 @@
 
 #ifndef RAX_ALLOC_H
 #define RAX_ALLOC_H
-#define rax_malloc malloc
-#define rax_realloc realloc
-#define rax_free free
+#include "osesdk_rax.h"
+#define rax_malloc osesdk_rax_malloc
+#define rax_realloc osesdk_rax_realloc
+#define rax_free osesdk_rax_free
 #endif
